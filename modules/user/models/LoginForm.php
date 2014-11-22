@@ -4,14 +4,13 @@ namespace app\modules\user\models;
 
 use app\commons\TinnaForm;
 use Yii;
-use yii\base\Model;
 
 /**
  * LoginForm is the model behind the login form.
  */
 class LoginForm extends TinnaForm
 {
-    public $username;
+    public $email;
     public $password;
     public $rememberMe = true;
 
@@ -24,7 +23,7 @@ class LoginForm extends TinnaForm
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['email', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -33,11 +32,22 @@ class LoginForm extends TinnaForm
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Пароль',
+            'email'    => 'E-Mail',
+        ];
+    }
+
+    /**
      * Validates the password.
      * This method serves as the inline validation for password.
      *
      * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param array $params     the additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params)
     {
@@ -45,7 +55,7 @@ class LoginForm extends TinnaForm
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неверное имя пользователя или пароль');
             }
         }
     }
@@ -57,7 +67,7 @@ class LoginForm extends TinnaForm
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {
             return false;
         }
@@ -71,7 +81,7 @@ class LoginForm extends TinnaForm
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByEmail($this->email);
         }
 
         return $this->_user;

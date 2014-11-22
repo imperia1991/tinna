@@ -2,12 +2,20 @@
 
 namespace app\modules\admin\controllers;
 
-use yii\web\Controller;
+use app\commons\AdminController;
+use yii\helpers\Url;
 
-class DefaultController extends Controller
+/**
+ * Class DefaultController
+ * @package app\modules\admin\controllers
+ */
+class DefaultController extends AdminController
 {
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(Url::to('/admin/category'));
     }
 }

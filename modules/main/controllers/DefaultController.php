@@ -2,13 +2,14 @@
 
 namespace app\modules\main\controllers;
 
+use app\commons\TinnaController;
 use yii\web\Controller;
 
 /**
  * Class DefaultController
  * @package app\modules\main\controllers
  */
-class DefaultController extends Controller
+class DefaultController extends TinnaController
 {
     /**
      * @return array

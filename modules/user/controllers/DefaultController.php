@@ -2,6 +2,7 @@
 
 namespace app\modules\user\controllers;
 
+use app\commons\AdminController;
 use app\modules\user\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -12,7 +13,7 @@ use yii\web\Controller;
  * Class DefaultController
  * @package app\modules\user\controllers
  */
-class DefaultController extends Controller
+class DefaultController extends AdminController
 {
     /**
      * @return array
@@ -34,7 +35,7 @@ class DefaultController extends Controller
             'verbs'  => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
                 ],
             ],
         ];

@@ -14,80 +14,82 @@ $dbMain = require(__DIR__ . '/db.php');
 $dbLocal = file_exists(__DIR__ . '/db-local.php') ? require_once(__DIR__ . '/db-local.php') : [];
 
 $config = [
-    'id' => 'tinna',
-    'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'main/default/index',
-    'bootstrap' => ['log'],
-    'modules' => [
-        'main' => [
+    'id'             => 'tinna',
+    'basePath'       => dirname(__DIR__),
+    'defaultRoute'   => 'main/default/index',
+    'bootstrap'      => ['log'],
+    'language'       => 'ru-RU',
+    'sourceLanguage' => 'ru',
+    'modules'        => [
+        'main'  => [
             'class' => 'app\modules\main\Module',
         ],
-        'user' => [
+        'user'  => [
             'class' => 'app\modules\user\Module',
         ],
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
     ],
-    'components' => [
-        'request' => [
+    'components'     => [
+        'request'      => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dfkdsfkdsf676dsfds',
         ],
-        'cache' => [
+        'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\modules\user\models\User',
+        'user'         => [
+            'identityClass'   => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['user/default/login'],
+            'loginUrl'        => ['user/default/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'main/default/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+        'mailer'       => [
+            'class'            => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'log' => [
+        'log'          => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
+            'targets'    => [
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error'],
+                    'class'   => 'yii\log\FileTarget',
+                    'levels'  => ['error'],
                     'logFile' => '@app/runtime/logs/web-error.log'
                 ],
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['warning'],
+                    'class'   => 'yii\log\FileTarget',
+                    'levels'  => ['warning'],
                     'logFile' => '@app/runtime/logs/web-warning.log'
                 ],
             ],
         ],
-        'urlManager' => [
+        'urlManager'   => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '' => 'main/default/index',
-                'contact' => 'main/contact/index',
-                '<_a:error>' => 'main/default/<_a>',
-                '<_a:(login|logout)>' => 'user/default/<_a>',
+            'showScriptName'  => false,
+            'rules'           => [
+                ''                                                => 'main/default/index',
+                'contact'                                         => 'main/contact/index',
+                '<_a:error>'                                      => 'main/default/<_a>',
+                '<_a:(login|logout)>'                             => 'user/default/<_a>',
 
                 '<_m:[\w\-]+>/<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_m>/<_c>/<_a>',
-                '<_m:[\w\-]+>/<_c:[\w\-]+>/<id:\d+>' => '<_m>/<_c>/view',
-                '<_m:[\w\-]+>' => '<_m>/default/index',
-                '<_m:[\w\-]+>/<_c:[\w\-]+>' => '<_m>/<_c>/index',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<id:\d+>'              => '<_m>/<_c>/view',
+                '<_m:[\w\-]+>'                                    => '<_m>/default/index',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>'                       => '<_m>/<_c>/index',
             ],
         ],
-        'db' => ArrayHelper::merge(
+        'db'           => ArrayHelper::merge(
             $dbMain,
             $dbLocal
         ),
     ],
-    'params' => $params,
+    'params'         => $params,
 ];
 
 if (YII_ENV_DEV) {
