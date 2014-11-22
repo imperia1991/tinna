@@ -1,14 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\main\models;
 
+use app\commons\TinnaForm;
 use Yii;
 use yii\base\Model;
 
 /**
  * ContactForm is the model behind the contact form.
  */
-class ContactForm extends Model
+class ContactForm extends TinnaForm
 {
     public $name;
     public $email;
@@ -27,7 +28,7 @@ class ContactForm extends Model
             // email has to be a valid email address
             ['email', 'email'],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'captchaAction' => '/main/contact/captcha'],
         ];
     }
 
