@@ -1,6 +1,17 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
+use yii\helpers\ArrayHelper;
+
+$paramsMain = require(__DIR__ . '/params.php');
+$paramsLocal = file_exists(__DIR__ . '/params-local.php') ? require_once(__DIR__ . '/params-local.php') : [];
+
+$params = ArrayHelper::merge(
+    $paramsMain,
+    $paramsLocal
+);
+
+$dbMain = require(__DIR__ . '/db.php');
+$dbLocal = file_exists(__DIR__ . '/db-local.php') ? require_once(__DIR__ . '/db-local.php') : [];
 
 $config = [
     'id' => 'basic',
@@ -9,7 +20,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '7cdhoninpUP0tsorHUS9BLfCkVBE71Ho',
+            'cookieValidationKey' => 'dfkdsfkdsf676dsfds',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -33,7 +44,13 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error'],
+                    'logFile' => '@app/runtime/logs/web-error.log'
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['warning'],
+                    'logFile' => '@app/runtime/logs/web-warning.log'
                 ],
             ],
         ],
@@ -46,7 +63,10 @@ $config = [
                 '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => ArrayHelper::merge(
+            $dbMain,
+            $dbLocal
+        ),
     ],
     'params' => $params,
 ];

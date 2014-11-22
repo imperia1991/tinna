@@ -1,9 +1,24 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
 
-$params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
+$paramsMain = require(__DIR__ . '/params.php');
+$paramsLocal = file_exists(__DIR__ . '/params-local.php') ? require_once(__DIR__ . '/params-local.php') : [];
+
+$params = ArrayHelper::merge(
+    $paramsMain,
+    $paramsLocal
+);
+
+$dbMain = require(__DIR__ . '/db.php');
+$dbLocal = file_exists(__DIR__ . '/db-local.php') ? require_once(__DIR__ . '/db-local.php') : [];
+
+$db = ArrayHelper::merge(
+    $dbMain,
+    $dbLocal
+);
 
 return [
     'id' => 'basic-console',
@@ -21,7 +36,13 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error'],
+                    'logFile' => '@app/runtime/logs/console-error.log'
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['warning'],
+                    'logFile' => '@app/runtime/logs/console-warning.log'
                 ],
             ],
         ],
