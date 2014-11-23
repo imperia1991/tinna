@@ -4,28 +4,28 @@ namespace app\modules\admin\models;
 
 use app\commons\AbstractActiveRecord;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\helpers\Html;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "sub_category".
  *
  * @property integer $id
  * @property string $title
+ * @property integer $category_id
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property Gallery[] $galleries
+ * @property Category $category
  */
-class Category extends AbstractActiveRecord
+class SubCategory extends AbstractActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'category';
+        return 'sub_category';
     }
 
     /**
@@ -34,8 +34,8 @@ class Category extends AbstractActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'category_id'], 'required'],
+            [['category_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255]
         ];
     }
@@ -46,20 +46,45 @@ class Category extends AbstractActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '№',
-            'title' => 'Название',
-            'status' => 'Статус',
-            'created_at' => 'Дата добавления',
-            'updated_at' => 'Дата обновления',
+            'id'          => 'Id',
+            'title'       => 'Название',
+            'category_id' => 'Категория',
+            'status'      => 'Статус',
+            'created_at'  => 'Дата добавления',
+            'updated_at'  => 'Дата обновления',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubCategories()
+    public function getGalleries()
     {
-        return $this->hasMany(SubCategory::className(), ['category_id' => 'id']);
+        return $this->hasMany(Gallery::className(), ['sub_category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param mixed $category_id
+     */
+    public function setCategoryId($category_id)
+    {
+        $this->category_id = $category_id;
     }
 
     /**

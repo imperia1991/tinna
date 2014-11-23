@@ -51,6 +51,21 @@ AppAsset::register($this);
                 'visible' => !Yii::$app->user->isGuest
             ],
             [
+                'label' => 'Подкатегории',
+                'url' => ['/admin/sub-category/index'],
+                'items' => [
+                    [
+                        'label' => 'Все',
+                        'url' => ['/admin/sub-category/index'],
+                    ],
+                    [
+                        'label' => 'Добавить',
+                        'url' => ['/admin/sub-category/create'],
+                    ],
+                ],
+                'visible' => !Yii::$app->user->isGuest
+            ],
+            [
                 'label' => 'Галереи',
                 'url' => ['/admin/gallery/index'],
                 'items' => [

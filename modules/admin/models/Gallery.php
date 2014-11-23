@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\models;
 
-use app\commons\AbstractActiveRecord;
 use Yii;
 
 /**
@@ -12,13 +11,13 @@ use Yii;
  * @property string $title
  * @property string $photo
  * @property integer $status
- * @property integer $category_id
+ * @property integer $sub_category_id
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property Category $category
+ * @property SubCategory $subCategory
  */
-class Gallery extends AbstractActiveRecord
+class Gallery extends \app\commons\AbstractActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,8 +33,8 @@ class Gallery extends AbstractActiveRecord
     public function rules()
     {
         return [
-            [['title', 'photo', 'category_id'], 'required'],
-            [['status', 'category_id', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'photo', 'sub_category_id', 'created_at', 'updated_at'], 'required'],
+            [['status', 'sub_category_id', 'created_at', 'updated_at'], 'integer'],
             [['title', 'photo'], 'string', 'max' => 255]
         ];
     }
@@ -50,7 +49,7 @@ class Gallery extends AbstractActiveRecord
             'title' => 'Title',
             'photo' => 'Photo',
             'status' => 'Status',
-            'category_id' => 'Category ID',
+            'sub_category_id' => 'Sub Category ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -59,66 +58,8 @@ class Gallery extends AbstractActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getSubCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(SubCategory::className(), ['id' => 'sub_category_id']);
     }
-
-    /**
-     * @return mixed
-     */
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
-    }
-
-
 }

@@ -1,10 +1,16 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
+use yii\db\Schema;
 
+/**
+ * Class m141122_150208_create_category_table
+ */
 class m141122_150208_create_category_table extends Migration
 {
+    /**
+     *
+     */
     public function up()
     {
         $tableOptions = null;
@@ -13,9 +19,9 @@ class m141122_150208_create_category_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
         $this->createTable('{{%category}}', [
-            'id' => Schema::TYPE_PK,
-            'title' => Schema::TYPE_STRING . ' NOT NULL',
-            'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 1',
+            'id'         => Schema::TYPE_PK,
+            'title'      => Schema::TYPE_STRING . ' NOT NULL',
+            'status'     => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 1',
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
@@ -24,6 +30,9 @@ class m141122_150208_create_category_table extends Migration
         $this->createIndex('idx_category_status', '{{%category}}', 'status');
     }
 
+    /**
+     *
+     */
     public function down()
     {
         $this->dropTable('{{%category}}');
