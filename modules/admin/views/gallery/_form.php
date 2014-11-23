@@ -1,8 +1,11 @@
 <?php
 
+use app\modules\admin\models\Category;
 use kartik\file\FileInput;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use kartik\depdrop\DepDrop;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Gallery */
@@ -16,14 +19,32 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
 
+    <?php
+    echo $form->field($model, 'category_id')->dropDownList(Category::getAllToDropDownList(), [
+        'prompt' => 'Выберите категорию',
+        'id'=>'cat-id'
+    ]);
 
-<?php    // With model & without ActiveForm
-    echo FileInput::widget([
-        'model'     => $model,
-        'attribute' => 'photo',
-        'options'   => ['multiple' => true]
+    // Dependent Dropdown
+    echo $form->field($model, 'sub_category_id')->widget(DepDrop::classname(), [
+        'options' => ['id'=>'subcat-id'],
+        'pluginOptions'=>[
+            'depends'=>['cat-id'],
+            'placeholder' => 'Выберите подкатегорию',
+            'loadingText' => 'Загрузка...',
+            'url' => Url::to(['/admin/sub-category/category'])
+        ]
     ]);
     ?>
+
+
+<?php //   // With model & without ActiveForm
+//    echo FileInput::widget([
+//        'model'     => $model,
+//        'attribute' => 'photo',
+//        'options'   => ['multiple' => true]
+//    ]);
+//    ?>
 
     <!--    --><? //= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 

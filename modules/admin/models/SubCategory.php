@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use app\commons\AbstractActiveRecord;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "sub_category".
@@ -165,6 +166,32 @@ class SubCategory extends AbstractActiveRecord
     public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+    }
+
+
+    /**
+     * Возвращает подкатегории для требуемой категории подготовленное для использования в DropDownList
+     * @param int $category_id
+     *
+     * @return mixed
+     */
+    public static function getByCategoryToDropDownList($category_id = 0)
+    {
+        /**@var SubCategory[] $subCategories */
+        $subCategories = static::find()->where([
+            'status' => static::STATUS_SHOW,
+            'category_id' => $category_id,
+        ])->all();
+
+        $result = [];
+        foreach ($subCategories as $subCategory) {
+            $result[] = [
+                'id' => $subCategory->getId(),
+                'name' => $subCategory->getTitle(),
+            ];
+        }
+
+        return $result;
     }
 
 }

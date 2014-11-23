@@ -15,7 +15,7 @@ use yii\helpers\Html;
  */
 class AbstractActiveRecord extends ActiveRecord
 {
-    const STATUS_SHOW = 1;
+    const STATUS_SHOW     = 1;
     const STATUS_NOT_SHOW = 0;
 
     /**
@@ -35,7 +35,7 @@ class AbstractActiveRecord extends ActiveRecord
     public function getStatusValues()
     {
         $statuses = [
-            static::STATUS_SHOW => Html::tag('span', 'Показывается', [
+            static::STATUS_SHOW     => Html::tag('span', 'Показывается', [
                 'style' => 'color: green'
             ]),
             static::STATUS_NOT_SHOW => Html::tag('span', 'Не показывается', [
@@ -53,6 +53,7 @@ class AbstractActiveRecord extends ActiveRecord
     public static function getAllToDropDownList()
     {
         $models = static::find()->where(['status' => static::STATUS_SHOW])->asArray()->all();
+
         return ArrayHelper::map($models, 'id', 'title');
     }
 } 

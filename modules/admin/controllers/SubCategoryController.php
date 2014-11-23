@@ -2,24 +2,28 @@
 
 namespace app\modules\admin\controllers;
 
+use app\commons\AdminController;
 use app\modules\admin\models\Category;
-use Yii;
 use app\modules\admin\models\SubCategory;
 use app\modules\admin\models\SubCategorySearch;
-use app\commons\AdminController;
-use yii\web\NotFoundHttpException;
+use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
 
 /**
  * SubCategoryController implements the CRUD actions for SubCategory model.
  */
 class SubCategoryController extends AdminController
 {
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -37,14 +41,16 @@ class SubCategoryController extends AdminController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
      * Displays a single SubCategory model.
+     *
      * @param integer $id
+     *
      * @return mixed
      */
     public function actionView($id)
@@ -81,7 +87,9 @@ class SubCategoryController extends AdminController
     /**
      * Updates an existing SubCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      */
     public function actionUpdate($id)
@@ -100,7 +108,9 @@ class SubCategoryController extends AdminController
     /**
      * Deletes an existing SubCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      */
     public function actionDelete($id)
@@ -110,10 +120,32 @@ class SubCategoryController extends AdminController
         return $this->redirect(['index']);
     }
 
+
+    /**
+     * Возвращает подкатегории для категории
+     * @throws \yii\base\ExitException
+     */
+    public function actionCategory()
+    {
+        if (Yii::$app->getRequest()->getIsAjax()) {
+            $post = Yii::$app->getRequest()->post('depdrop_parents');
+
+            $out = SubCategory::getByCategoryToDropDownList($post[0]);
+
+            echo Json::encode(['output' => $out, 'selected' => '']);
+
+            Yii::$app->end();
+        }
+
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
     /**
      * Finds the SubCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return SubCategory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
