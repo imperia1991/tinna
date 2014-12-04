@@ -50,11 +50,17 @@ class CategoryController extends AdminController
      */
     public function actionCreate()
     {
-        $model = new Category();
+        $model = new Category(['scenario' => Category::SCENARIO_CATEGORY]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Категория добавлена успешно');
+
             return $this->redirect(['index']);
         } else {
+            $errors = $model->getErrors();
+            if (!empty($errors)) {
+                Yii::$app->getSession()->setFlash('error', array_values($errors));
+            }
 
             $model->setStatus(Category::STATUS_SHOW);
 
@@ -75,6 +81,7 @@ class CategoryController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(Category::SCENARIO_CATEGORY);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

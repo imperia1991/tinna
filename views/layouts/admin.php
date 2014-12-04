@@ -1,5 +1,6 @@
 <?php
-use app\assets\AppAsset;
+use app\assets\AdminAsset;
+use app\commons\Alert;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
@@ -8,7 +9,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AppAsset::register($this);
+AdminAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -17,8 +18,10 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <?= Html::csrfMetaTags() ?>
-    <title ><?= Html::encode($this->title) ?></title >
+    <title >tinna.com.ua - Админка - <?= Html::encode($this->title) ?></title >
     <?php $this->head() ?>
+    <link rel="icon" type="image/png" href="<?php echo Yii::$app->params['homeUrl']; ?>img/favicon.ico" />
+    <base href="<?php echo Yii::$app->params['homeUrl']; ?>" >
 </head >
 <body >
 
@@ -36,46 +39,16 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items'   => [
             [
-                'label' => 'Категории',
-                'url' => ['/admin/category/index'],
-                'items' => [
+                'label'   => 'Категории',
+                'url'     => ['/admin/category/index'],
+                'items'   => [
                     [
                         'label' => 'Все',
-                        'url' => ['/admin/category/index'],
+                        'url'   => ['/admin/category/index'],
                     ],
                     [
                         'label' => 'Добавить',
-                        'url' => ['/admin/category/create'],
-                    ],
-                ],
-                'visible' => !Yii::$app->user->isGuest
-            ],
-            [
-                'label' => 'Подкатегории',
-                'url' => ['/admin/sub-category/index'],
-                'items' => [
-                    [
-                        'label' => 'Все',
-                        'url' => ['/admin/sub-category/index'],
-                    ],
-                    [
-                        'label' => 'Добавить',
-                        'url' => ['/admin/sub-category/create'],
-                    ],
-                ],
-                'visible' => !Yii::$app->user->isGuest
-            ],
-            [
-                'label' => 'Галереи',
-                'url' => ['/admin/gallery/index'],
-                'items' => [
-                    [
-                        'label' => 'Все',
-                        'url' => ['/admin/gallery/index'],
-                    ],
-                    [
-                        'label' => 'Добавить',
-                        'url' => ['/admin/gallery/create'],
+                        'url'   => ['/admin/category/create'],
                     ],
                 ],
                 'visible' => !Yii::$app->user->isGuest
@@ -91,11 +64,13 @@ AppAsset::register($this);
     ?>
 
     <div class="container" >
+        <?php echo Alert::widget(); ?>
+
         <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'links'    => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             'homeLink' => [
                 'label' => 'Главная',
-                'url' => \yii\helpers\Url::to('/admin')
+                'url'   => \yii\helpers\Url::to('/admin')
             ]
         ]) ?>
         <?= $content ?>

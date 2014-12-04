@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\admin\models\Gallery;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\admin\models\GallerySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Galleries';
+$this->title = 'Галереи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="gallery-index">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Gallery', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить галерею', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,16 +25,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'photo',
+                'filter' => false,
+                'enableSorting' => false,
+                'format'    => 'raw',
+                'value' => function ($model) {
+                    /**@var Gallery $model */
+                    return Html::img($model->getPhoto(), [
+                        'width' => 80,
+                        'height' => 80,
+                    ]);
+                }
+            ],
+            [
+                'attribute' => 'category_id',
+                'filter' => $searchModel->getCategoriesToDropDownList(),
+                'value' => 'category.title',
+            ],
+            [
+                'attribute' => 'status',
+                'filter'    => $searchModel->getStatusValues(false),
+                'format'    => 'raw',
+                'value'     => function ($model) {
+                    /** @var \app\modules\admin\models\Gallery $model */
+                    return $model->getStatusValues();
+                }
+            ],
 
-            'id',
-            'title',
-            'photo',
-            'status',
-            'sub_category_id',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class'    => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}',
+            ],
         ],
     ]); ?>
 

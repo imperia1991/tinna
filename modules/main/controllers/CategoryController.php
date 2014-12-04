@@ -3,14 +3,13 @@
 namespace app\modules\main\controllers;
 
 use app\commons\TinnaController;
-use yii\helpers\Url;
 use yii\web\Controller;
 
 /**
- * Class DefaultController
+ * Class CategoryController
  * @package app\modules\main\controllers
  */
-class DefaultController extends TinnaController
+class CategoryController extends TinnaController
 {
     /**
      * @return array
@@ -29,6 +28,6 @@ class DefaultController extends TinnaController
      */
     public function actionIndex()
     {
-        return $this->redirect(Url::to('/category'));
+        return $this->render('index');
     }
 }

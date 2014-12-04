@@ -11,16 +11,17 @@ use Yii;
  * @property string $title
  * @property string $photo
  * @property integer $status
- * @property integer $sub_category_id
+ * @property integer $category_id
+ * @property string $alias
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $text
+ * @property string $orderby
  *
- * @property SubCategory $subCategory
+ * @property Category $category
  */
 class Gallery extends \app\commons\AbstractActiveRecord
 {
-    public $category_id;
-
     /**
      * @inheritdoc
      */
@@ -35,9 +36,9 @@ class Gallery extends \app\commons\AbstractActiveRecord
     public function rules()
     {
         return [
-            [['title', 'photo', 'sub_category_id'], 'required'],
-            [['status', 'sub_category_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'photo'], 'string', 'max' => 255]
+            [['category_id'], 'required'],
+            [['status', 'category_id', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'photo', 'alias'], 'string', 'max' => 255]
         ];
     }
 
@@ -47,39 +48,25 @@ class Gallery extends \app\commons\AbstractActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Название',
-            'photo' => 'Путь к фото',
-            'status' => 'Статус',
+            'id'              => 'ID',
+            'title'           => 'Название',
+            'photo'           => 'Путь к фото',
+            'status'          => 'Статус',
             'sub_category_id' => 'Подкатегория',
-            'created_at' => 'Дата добавления',
-            'updated_at' => 'Дата обновления',
-            'category_id' => 'Категория',
+            'created_at'      => 'Дата добавления',
+            'updated_at'      => 'Дата обновления',
+            'category_id'     => 'Категория',
+            'text'            => 'Фотографии',
+            'orderby'         => 'Порядок',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubCategory()
+    public function getCategory()
     {
-        return $this->hasOne(SubCategory::className(), ['id' => 'sub_category_id']);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCategoryId()
-    {
-        return $this->getSubCategory()->one()->getId();
-    }
-
-    /**
-     * @param mixed $category_id
-     */
-    public function setCategoryId($category_id)
-    {
-        $this->category_id = $category_id;
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -149,22 +136,6 @@ class Gallery extends \app\commons\AbstractActiveRecord
     /**
      * @return mixed
      */
-    public function getSubCategoryId()
-    {
-        return $this->sub_category_id;
-    }
-
-    /**
-     * @param mixed $sub_category_id
-     */
-    public function setSubCategoryId($sub_category_id)
-    {
-        $this->sub_category_id = $sub_category_id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTitle()
     {
         return $this->title;
@@ -194,5 +165,63 @@ class Gallery extends \app\commons\AbstractActiveRecord
         $this->updated_at = $updated_at;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
 
+    /**
+     * @param mixed $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param mixed $category_id
+     */
+    public function setCategoryId($category_id)
+    {
+        $this->category_id = $category_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderby()
+    {
+        return $this->orderby;
+    }
+
+    /**
+     * @param mixed $orderby
+     */
+    public function setOrderby($orderby)
+    {
+        $this->orderby = $orderby;
+    }
+
+    /**
+     * @param int $categoryId
+     */
+    public static function getAllBy($categoryId = 0)
+    {
+        return static::find()->orderBy([
+            'orderby' => 'ASC'
+        ])->where([
+            'category_id' => $categoryId
+        ])->all();
+    }
 }

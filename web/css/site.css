@@ -89,3 +89,18 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.remove-photo {
+    color: #ff0000;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.remove-photo:hover {
+    color: #FF0000;
+}
+
+#photos li {
+    position: relative;
+}

@@ -52,15 +52,15 @@ class GallerySearch extends Gallery
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'category_id' => $this->category_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id' => $this->getId(),
+            'status' => $this->getStatus(),
+            'category_id' => $this->getCategoryId(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'photo', $this->photo]);
+        $query->andFilterWhere(['like', 'title', $this->getTitle()])
+            ->andFilterWhere(['like', 'photo', $this->getPhoto()]);
 
         return $dataProvider;
     }

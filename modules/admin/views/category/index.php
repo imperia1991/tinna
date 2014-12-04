@@ -1,7 +1,9 @@
 <?php
 
+use app\modules\admin\models\Category;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\admin\models\CategorySearch */
@@ -28,18 +30,35 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'title',
-                'filter'    => false
+            ],
+            [
+                'attribute' => 'parent_id',
+                'filter' => $searchModel->getParentsToDropDownList(),
+                'value' => function ($model) {
+                    /** @var \app\modules\admin\models\Category $model */
+                    /** @var \app\modules\admin\models\Category $parent */
+                    $parent = $model->getParent();
+
+                    return is_object($parent) ? $parent->getTitle() : '';
+                },
             ],
             [
                 'attribute' => 'status',
-                'filter'    => false,
+                'filter'    => $searchModel->getStatusValues(false),
                 'format'    => 'raw',
                 'value'     => function ($model) {
                     /** @var \app\modules\admin\models\Category $model */
                     return $model->getStatusValues();
                 }
             ],
-
+            [
+                'attribute' => 'Галлерея',
+                'format'    => 'raw',
+                'value'     => function ($model) {
+                    /** @var \app\modules\admin\models\Category $model */
+                    return $model->getParentId() ? Html::a('Редактировать', Url::to('/admin/gallery/update/' . $model->getId())) : '';
+                }
+            ],
             [
                 'class'    => 'yii\grid\ActionColumn',
                 'template' => '{update}{delete}',

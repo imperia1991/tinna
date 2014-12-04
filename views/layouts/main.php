@@ -1,9 +1,7 @@
 <?php
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -16,54 +14,79 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Привет, я профессиональный Свадебный фотограф Tinna Tihonenko. Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах. Консультации, Свадебный фотограф Украина, Свадебный фотограф Киев, Профессиональный фотограф Черкассы, лучшие свадебные фотографы, фотограф черкассы цены, фотографы черкасс. " />
+    <meta name="keywords" content="свадебный фотограф, свадебный фотограф Черкассы, фотограф, фотограф Черкассы, Tinna Tihonenko, фотограф Тинна Тихоненко, фотосессии в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, фотограф черкассы цены, свадебный фотограф черкассы, фотографы черкасс, лучшие свадебные фотографы." />
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode(Yii::$app->params['mainTitle'] . '-' . $this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    <link rel="icon" type="image/png" href="<?php echo Yii::$app->params['homeUrl']; ?>img/favicon.ico"/>
+    <base href="<?php echo Yii::$app->params['homeUrl']; ?>">
 </head>
-<body>
+<body id="body" class="archive category category-- category-1 not-mobile excerpted-posts">
+<div id="inner-body">
+    <div id="outer-wrap-centered">
+        <div id="main-wrap-outer">
+            <div id="main-wrap-inner">
+                <div id="inner-wrap">
+                    <header class="sc">
+                        <div id="logo-wrap">
+                            <div id="logo">
+                                <a href="/"
+                                   title="<?php echo Yii::$app->params['homeUrl']; ?>"
+                                   rel="home"
+                                   id="logo-img-a">
+                                    <img id="logo-img"
+                                         src="<?php echo Yii::$app->params['homeUrl'] . 'img/logo.jpg'; ?>"
+                                         width="630"
+                                         height="396"
+                                         alt="<?php echo Yii::$app->params['homeUrl']; ?> logo"/>
+                                </a>
 
-<?php $this->beginBody() ?>
-    <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => 'My Company',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Home', 'url' => ['/main/default/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/main/contact/index']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/user/default/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/user/default/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],
-            ]);
-            NavBar::end();
-        ?>
+                                <h1>
+                                    <a href="index.html"
+                                       title="<?php echo Yii::$app->params['homeUrl']; ?>"
+                                       rel="home"><?php echo Yii::$app->params['homeUrl']; ?></a>
+                                </h1>
 
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= $content ?>
+                                <p>
+                                    Фотограф Тинна Тихоненко
+                                </p>
+                            </div>
+                        </div>
+                        <nav id="primary-nav" class="centered sc">
+                            <ul class="primary-nav-menu suckerfish sc">
+                                <?php /**@var \app\modules\admin\models\Category category */ ?>
+                                <?php foreach (Yii::$app->controller->categories as $category): ?>
+                                    <li class="text-about-me mi-type-internal mi-page mi-anchor-text">
+                                        <a href="<?php echo Url::to('/category/' . $category->getAlias()) ?>"
+                                           class="text-about-me mi-type-internal mi-page mi-anchor-text">
+                                            <?php echo $category->getTitle(); ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </nav>
+                    </header>
+                    <div id="content-wrap" class="sc">
+                        <div id="content">
+                            <?= $content ?>
+                        </div>
+                    </div>
+                    <div id="copyright-footer" class="content-bg">
+                        <p id="user-copyright">
+                            &copy; <?= date('Y') ?> Все права защищены
+                            <span class="pipe">|</span>
+                            <?php echo Html::a('www.tinna.com.ua', Yii::$app->params['homeUrl']); ?>
+                        </p>
+
+                        <div id="wp-footer-action-output"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <footer class="footer">
-        <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
-
-<?php $this->endBody() ?>
+</div>
 </body>
 </html>
 <?php $this->endPage() ?>
