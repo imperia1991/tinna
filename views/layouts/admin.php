@@ -53,6 +53,11 @@ AdminAsset::register($this);
                 ],
                 'visible' => !Yii::$app->user->isGuest
             ],
+            [
+                'label'   => 'Настройки',
+                'url'     => ['/admin/settings/index'],
+                'visible' => !Yii::$app->user->isGuest
+            ],
             Yii::$app->user->isGuest ?
                 ['label' => 'Авторизация', 'url' => ['/user/default/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',

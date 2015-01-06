@@ -1,9 +1,6 @@
 # phpstorm project files
 .idea
 
-# netbeans project files
-nbproject
-
 # zend studio for eclipse project files
 .buildpath
 .project
@@ -11,9 +8,6 @@ nbproject
 
 # windows thumbnail cache
 Thumbs.db
-
-# composer vendor dir
-/vendor
 
 # composer itself is not needed
 composer.phar
@@ -25,3 +19,7 @@ composer.phar
 phpunit.phar
 # local phpunit config
 /phpunit.xml
+
+/web/assets/*
+/web/images/*
+/migrations

@@ -3,6 +3,7 @@
 namespace app\modules\main\controllers;
 
 use app\commons\TinnaController;
+use app\modules\admin\models\Settings;
 use app\modules\main\models\ContactForm;
 use Yii;
 
@@ -20,12 +21,14 @@ class ContactController extends TinnaController
     public function actions()
     {
         return [
-            'error' => [
+            'error'   => [
                 'class' => 'yii\web\ErrorAction',
             ],
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
+                'class'           => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'minLength'       => 4,
+                'maxLength'       => 4,
             ],
         ];
     }
@@ -35,17 +38,28 @@ class ContactController extends TinnaController
      */
     public function actionIndex()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $modelContact = new ContactForm();
 
-            return $this->refresh();
-        } else {
-            return $this->render('index', [
-                'model' => $model,
-            ]);
+        if (Yii::$app->getRequest()->isPost) {
+
+            $modelContact->load(Yii::$app->request->post());
+
+            if ($modelContact->validate()) {
+                if ($modelContact->contact(Yii::$app->params['adminEmail'])) {
+                    Yii::$app->session->setFlash('success', 'Ваше сообщение отправлено. Спасибо');
+
+                    return $this->refresh();
+                } else {
+                    Yii::$app->session->setFlash('error', 'Извините. Ваше сообщение не было отправлено. Попробуйте позже');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Вы допустили ошибки при вводе сообщения. Исправьте их пожалуйста');
+            }
         }
+
+        return $this->render('index', [
+            'modelContact'  => $modelContact,
+            'modelSettings' => Settings::find()->one(),
+        ]);
     }
-
-
 }

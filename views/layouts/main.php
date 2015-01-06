@@ -65,6 +65,12 @@ AppAsset::register($this);
                                         </a>
                                     </li>
                                 <?php endforeach; ?>
+                                <li class="text-about-me mi-type-internal mi-page mi-anchor-text">
+                                    <a href="<?php echo Url::to('/contact') ?>"
+                                       class="text-about-me mi-type-internal mi-page mi-anchor-text">
+                                        Контакты
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </header>

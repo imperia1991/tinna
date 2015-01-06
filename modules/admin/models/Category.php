@@ -106,7 +106,7 @@ class Category extends AbstractActiveRecord
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            $this->setTags(str_replace(' ', '' , trim($this->getTags(), ' \t\n\r\0\x0B,.')));
+            $this->setTags(str_replace(' ', '', trim($this->getTags(), ' \t\n\r\0\x0B,.')));
 
             return true;
         }
@@ -127,7 +127,7 @@ class Category extends AbstractActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
+        return $this->hasMany(Category::className(), ['parent_id' => 'id'])->all();
     }
 
     /**
@@ -135,7 +135,7 @@ class Category extends AbstractActiveRecord
      */
     public function getGalleries()
     {
-        return $this->hasMany(Gallery::className(), ['category_id' => 'id'])->all();
+        return $this->hasMany(Gallery::className(), ['category_id' => 'id'])->orderBy('orderby')->all();
     }
 
     /**
@@ -287,10 +287,16 @@ class Category extends AbstractActiveRecord
      */
     public static function getParents()
     {
-        return static::find()->where([
-            'status'    => static::STATUS_SHOW,
-            'parent_id' => null,
-        ])->all();
+        return static::find()
+            ->from('category c')
+            ->join('JOIN', 'category cc', 'cc.parent_id = c.id')
+            ->join('JOIN', 'gallery g', 'cc.id = g.category_id')
+            ->where([
+                'c.status'    => static::STATUS_SHOW,
+                'c.parent_id' => null,
+            ])
+            ->groupBy('c.id')
+            ->all();
     }
 
     /**
@@ -335,5 +341,32 @@ class Category extends AbstractActiveRecord
     public function getTagsArray()
     {
         return explode(',', $this->getTags());
+    }
+
+
+    /**
+     * Возвращает одно фото галереи
+     * @return null
+     */
+    public function getOnePhoto()
+    {
+        $galleries = $this->getGalleries();
+        if (isset($galleries[0])) {
+            return $galleries[0]->getPhoto();
+        } else {
+            return null;
+        }
+    }
+
+    public function getAllTags()
+    {
+        $tags = $this->getTagsArray();
+
+        $parentTags = [];
+        if ($this->getParent()) {
+            $parentTags = $this->getParent()->getTagsArray();
+        }
+
+        return ArrayHelper::merge($parentTags, $tags);
     }
 }
