@@ -106,7 +106,7 @@ class Category extends AbstractActiveRecord
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            $this->setTags(str_replace(' ', '', trim($this->getTags(), ' \t\n\r\0\x0B,.')));
+            $this->setTags(trim($this->getTags(), ' \t\n\r\0\x0B,.'));
 
             return true;
         }

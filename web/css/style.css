@@ -1826,7 +1826,7 @@ body.excerpted-posts a.img-to-permalink {
     float: left
 }
 
-body.excerpted-posts #content .article-content .pp-img-protect, body.excerpted-posts #content .article-content img {
+body.excerpted-posts #content .article-content .pp-img-protect {
     float: left;
     margin: 0 !important
 }
@@ -3530,4 +3530,8 @@ button.close {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff2dede', endColorstr='#ffe7c3c3', GradientType=0);
     background-repeat: repeat-x;
     border-color: #dca7a7;
+}
+
+img.pp-insert-all {
+    margin-bottom: 8px !important;
 }

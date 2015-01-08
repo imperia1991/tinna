@@ -62,4 +62,24 @@ class ContactController extends TinnaController
             'modelSettings' => Settings::find()->one(),
         ]);
     }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionPricing()
+    {
+        return $this->render('pricing', [
+            'modelSettings' => Settings::find()->one(),
+        ]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionAbout()
+    {
+        return $this->render('about', [
+            'modelSettings' => Settings::find()->one(),
+        ]);
+    }
 }

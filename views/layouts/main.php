@@ -14,8 +14,10 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Привет, я профессиональный Свадебный фотограф Tinna Tihonenko. Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах. Консультации, Свадебный фотограф Украина, Свадебный фотограф Киев, Профессиональный фотограф Черкассы, лучшие свадебные фотографы, фотограф черкассы цены, фотографы черкасс. " />
-    <meta name="keywords" content="свадебный фотограф, свадебный фотограф Черкассы, фотограф, фотограф Черкассы, Tinna Tihonenko, фотограф Тинна Тихоненко, фотосессии в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, фотограф черкассы цены, свадебный фотограф черкассы, фотографы черкасс, лучшие свадебные фотографы." />
+    <meta name="description"
+          content="Привет, я профессиональный Свадебный фотограф Tinna Tihonenko. Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах. Консультации, Свадебный фотограф Украина, Свадебный фотограф Киев, Профессиональный фотограф Черкассы, лучшие свадебные фотографы, фотограф черкассы цены, фотографы черкасс. "/>
+    <meta name="keywords"
+          content="свадебный фотограф, свадебный фотограф Черкассы, фотограф, фотограф Черкассы, Tinna Tihonenko, фотограф Тинна Тихоненко, фотосессии в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, Свадебная фотосъемка Черкассы и Украина, Черкассы фотограф, Свадебная фотосъемка в Черкассах, Свадебный фотограф Черкассы, фотограф Черкассы, фотограф черкассы цены, свадебный фотограф черкассы, фотографы черкасс, лучшие свадебные фотографы."/>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode(Yii::$app->params['mainTitle'] . '-' . $this->title) ?></title>
     <?php $this->head() ?>
@@ -66,10 +68,33 @@ AppAsset::register($this);
                                     </li>
                                 <?php endforeach; ?>
                                 <li class="text-about-me mi-type-internal mi-page mi-anchor-text">
-                                    <a href="<?php echo Url::to('/contact') ?>"
+                                    <a href="#"
                                        class="text-about-me mi-type-internal mi-page mi-anchor-text">
-                                        Контакты
+                                        contacts
                                     </a>
+                                    <ul style="opacity: 1;">
+                                        <li class="text-vkcom mi-type-manual mi-anchor-text"
+                                            id="primary_nav_menu_item_12">
+
+                                            <a class="text-vkcom mi-type-manual mi-anchor-text"
+                                               href="<?php echo Url::to('/contact') ?>">contacts</a>
+
+                                        </li>
+                                        <li class="text-instagram mi-type-manual mi-anchor-text"
+                                            id="primary_nav_menu_item_14">
+
+                                            <a class="text-instagram mi-type-manual mi-anchor-text"
+                                               href="<?php echo Url::to('/pricing') ?>">pricing</a>
+
+                                        </li>
+                                        <li class="text-facebook mi-type-manual mi-anchor-text"
+                                            id="primary_nav_menu_item_15">
+
+                                            <a class="text-facebook mi-type-manual mi-anchor-text"
+                                               href="<?php echo Url::to('/about') ?>">about me</a>
+
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </nav>

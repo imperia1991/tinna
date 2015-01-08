@@ -43,7 +43,7 @@ $this->title = $category->getParent()->getTitle();
             <?php foreach ($category->getAllTags() as $tag): ?>
             <a href="<?php echo Yii::$app->params['homeUrl']; ?>">
                 <?php echo $tag; ?>
-            </a>
+            </a>,
             <?php endforeach; ?>
         </div>
 
