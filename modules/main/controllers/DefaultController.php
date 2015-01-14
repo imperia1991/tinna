@@ -29,6 +29,6 @@ class DefaultController extends TinnaController
      */
     public function actionIndex()
     {
-        return $this->redirect(Url::to('/category'));
+        return $this->redirect(Url::to('/'));
     }
 }

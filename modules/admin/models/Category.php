@@ -4,6 +4,7 @@
 namespace app\modules\admin\models;
 
 use app\commons\AbstractActiveRecord;
+use Symfony\Component\Console\Helper\Helper;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -323,7 +324,8 @@ class Category extends AbstractActiveRecord
 
             $html .= Html::a('Удалить', 'javascript:void(0);', [
                 'class'   => 'remove-photo',
-                'data-id' => $gallery->getPhoto()
+                'data-id' => $gallery->getId(),
+                'data-photo' => $gallery->getPhoto()
             ]);
 
             $items[] = [
@@ -367,6 +369,16 @@ class Category extends AbstractActiveRecord
             $parentTags = $this->getParent()->getTagsArray();
         }
 
-        return ArrayHelper::merge($parentTags, $tags);
+        $tags = ArrayHelper::merge($parentTags, $tags);
+
+        $tagsLinks = [];
+        foreach ($tags as $tag) {
+            if (!empty($tag)) {
+                $tagsLinks[] = Html::a($tag, Yii::$app->params['homeUrl']);
+            }
+        }
+
+        return join(', ', $tagsLinks);
+
     }
 }

@@ -120,10 +120,15 @@ class GalleryController extends AdminController
     {
         if (Yii::$app->getRequest()->getIsAjax() && Yii::$app->getRequest()->getIsPost()) {
             $photo = trim(Yii::$app->getRequest()->post('photo'), '/');
+            $id = Yii::$app->getRequest()->post('id', 0);
 
             $path = Yii::$app->params['images']['webPath'] . DIRECTORY_SEPARATOR . $photo;
 
             try {
+                Gallery::deleteAll([
+                    'id' => $id
+                ]);
+
                 if (file_exists($photo)) {
                     unlink($path);
 
@@ -133,8 +138,8 @@ class GalleryController extends AdminController
                     ]);
                 } else {
                     return $this->respondJSON([
-                        'error'   => 1,
-                        'success' => 0,
+                        'error'   => 0,
+                        'success' => 1,
                     ]);
                 }
             } catch (\ErrorException $e) {

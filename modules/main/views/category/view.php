@@ -40,11 +40,7 @@ $this->title = $category->getParent()->getTitle();
         </div><!-- .article-wrap-inner -->
 
         <div class="article-footer">
-            <?php foreach ($category->getAllTags() as $tag): ?>
-            <a href="<?php echo Yii::$app->params['homeUrl']; ?>">
-                <?php echo $tag; ?>
-            </a>,
-            <?php endforeach; ?>
+            <?php echo $category->getAllTags(); ?>
         </div>
 
     </div><!-- .article-wrap -->

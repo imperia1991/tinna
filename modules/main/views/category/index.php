@@ -45,4 +45,8 @@ $this->title = $category->getTitle();
         </div>
 
     </div>
+
+</div>
+<div class="article-footer parent-gallery">
+    <?php echo $category->getAllTags(); ?>
 </div>

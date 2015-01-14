@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'tinna.zenit@gmail.com',
     'supportEmail' => '',
     'images' => [
         'tmp' => 'images/temp/',

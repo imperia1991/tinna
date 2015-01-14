@@ -22,4 +22,5 @@ phpunit.phar
 
 /web/assets/*
 /web/images/*
+/web/images/photo/*
 /migrations

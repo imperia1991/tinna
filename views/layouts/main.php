@@ -21,11 +21,25 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode(Yii::$app->params['mainTitle'] . '-' . $this->title) ?></title>
     <?php $this->head() ?>
-    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    <!--    <link rel="stylesheet" href="/css/style.css" type="text/css"/>-->
     <link rel="icon" type="image/png" href="<?php echo Yii::$app->params['homeUrl']; ?>img/favicon.ico"/>
     <base href="<?php echo Yii::$app->params['homeUrl']; ?>">
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27053474-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
 </head>
 <body id="body" class="archive category category-- category-1 not-mobile excerpted-posts">
+<?php $this->beginBody() ?>
 <div id="inner-body">
     <div id="outer-wrap-centered">
         <div id="main-wrap-outer">
@@ -68,7 +82,7 @@ AppAsset::register($this);
                                     </li>
                                 <?php endforeach; ?>
                                 <li class="text-about-me mi-type-internal mi-page mi-anchor-text">
-                                    <a href="#"
+                                    <a href="javascript:void(0);"
                                        class="text-about-me mi-type-internal mi-page mi-anchor-text">
                                         contacts
                                     </a>
@@ -118,6 +132,8 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
+<div id="scroller" class="b-top" style="display: none;"><span class="b-top-but">наверх</span></div>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

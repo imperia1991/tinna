@@ -1,2 +1,18 @@
+User-agent: Yandex
+Disallow: /admin
+Disallow: /cgi-bin
+Disallow: /images
+Host: tinna.com.ua
+
+User-agent: googlebot
+Disallow: /admin
+Disallow: /cgi-bin
+Disallow: /images
+
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /cgi-bin
+Disallow: /images
+Crawl-delay:3
+
+Sitemap:http://tinna.com.ua/sitemap.xml

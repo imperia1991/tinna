@@ -52,7 +52,7 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
         ],
         'log'          => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -73,15 +73,16 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName'  => false,
             'rules'           => [
-                ''                                                => 'main/default/index',
+                ''                                                => 'main/category/index',
                 'contact'                                         => 'main/contact/index',
                 'pricing'                                         => 'main/contact/pricing',
-                'about'                                         => 'main/contact/about',
+                'about'                                           => 'main/contact/about',
                 '<_a:error>'                                      => 'main/default/<_a>',
                 '<_a:(login|logout)>'                             => 'user/default/<_a>',
                 '<_c:(category)>'                                 => 'main/category/index',
                 '<_c:(category)>/<alias:[\w\-]+>'                 => 'main/category/index',
                 '<_c:(category)>/<_a:(view)>/<alias:[\w\-]+>'     => 'main/category/view',
+                '<_m:(admin)>/sitemap.xml'                        => 'admin/sitemap/index',
                 '<_m:[\w\-]+>/<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_m>/<_c>/<_a>',
                 '<_m:[\w\-]+>/<_c:[\w\-]+>/<id:\d+>'              => '<_m>/<_c>/view',
                 '<_m:[\w\-]+>'                                    => '<_m>/default/index',

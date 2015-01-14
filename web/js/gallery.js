@@ -10,7 +10,8 @@ var gallery = {
                 type: 'post',
                 url: '/admin/gallery/delete',
                 data: {
-                    'photo': $(this).data('id')
+                    'photo': $(this).data('photo'),
+                    'id': $(this).data('id')
                 },
                 success: function(response){
                     if (response.success) {

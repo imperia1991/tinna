@@ -56,8 +56,10 @@ class ContactForm extends TinnaForm
     {
         $send = Yii::$app->mailer->compose()
             ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
+            ->setFrom([
+                $this->email => 'Обратная связь ' . $this->name
+            ])
+            ->setSubject('tinna.com.ua "' . $this->subject . '"')
             ->setTextBody($this->body)
             ->send();
 

@@ -3,9 +3,7 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-class AdminAsset extends AssetBundle {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+class AdminAsset extends MainAsset {
     public $css = [
         'css/site.css',
     ];
